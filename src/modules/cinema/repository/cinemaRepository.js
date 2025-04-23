@@ -25,6 +25,21 @@ class CinemaRepository {
 
     return rowsUpdated > 0;
   }
+
+  async deleteCinemaById(id) {
+    const rowsDeleted = await Cinema.destroy({
+      where: { id },
+    });
+    return rowsDeleted > 0;
+  }
+
+  async findAllCinemas(skip, limit) {
+    return await Cinema.findAll({
+      offset: skip,
+      limit: limit,
+      order: [['id', 'ASC']], // ordenação opcional
+    });
+  }
 }
 
 export { CinemaRepository };

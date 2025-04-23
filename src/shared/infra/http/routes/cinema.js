@@ -14,4 +14,12 @@ cinemaRouter.put("/:id", (req, res) =>
   cinemaController.updateCinemaController(req, res)
 );
 
+cinemaRouter.delete("/:id", (req, res) =>
+  cinemaController.deleteCinemaController(req, res)
+);
+
+cinemaRouter.get("/", (req, res) =>
+  cinemaController.getAllCinemasController(req,res)
+);
+
 export { cinemaRouter };
