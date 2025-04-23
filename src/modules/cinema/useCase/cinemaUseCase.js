@@ -1,8 +1,9 @@
 import { AppError } from "../../../shared/errors/appError.js";
 
 class CinemaUseCase {
-  constructor({ CinemaRepository }) {
+  constructor({ CinemaRepository, SessaoRepository }) {
     this.CinemaRepository = CinemaRepository;
+    this.SessaoRepository = SessaoRepository;
   }
 
   async createCinema(nome, cidade, estado) {
@@ -39,7 +40,6 @@ class CinemaUseCase {
   async updateCinema({ id, nome, cidade, estado }) {
     const cinema = await this.CinemaRepository.findCinemaById(id);
 
-    console.log(cinema);
     if (!cinema) {
       throw new AppError("Esse cinema não existe!", 400);
     }
@@ -58,49 +58,44 @@ class CinemaUseCase {
       cidade,
       estado,
     });
-
-    console.log(updateCinema);
   }
 
   async deleteCinema({ id }) {
-
     const cinema = await this.CinemaRepository.findCinemaById(id);
-  
+
     if (!cinema) {
       throw new AppError("Esse cinema não existe!", 400);
     }
 
-    // const sessoes = await this.SessaoRepository.findByCinemaId(id);
-  
-    // if (sessoes.length > 0) {
-    //   throw new AppError("Não é possível deletar o cinema com sessões associadas!", 400);
-    // }
-  
+    const sessoes = await this.SessaoRepository.findByCinemaId(id);
+
+    if (sessoes.length > 0) {
+      throw new AppError(
+        "Não é possível deletar um cinema com sessões associadas!",
+        400
+      );
+    }
+
     await this.CinemaRepository.deleteCinemaById(id);
-   
   }
 
-  async getAllCinemas({ page , limit }) {
-  
-  if (limit <= 0 || page <= 0) {
-    throw new AppError("O valor de 'limit' e 'page deve ser um número inteiro positivo.", 400); // lança erro se não houver cinemas
-  }
+  async getAllCinemas({ page, limit }) {
+    if (limit <= 0 || page <= 0) {
+      throw new AppError(
+        "O valor de 'limit' e 'page deve ser um número inteiro positivo.",
+        400
+      ); // lança erro se não houver cinemas
+    }
 
-  const skip = (page - 1) * limit; 
-  const cinemas = await this.CinemaRepository.findAllCinemas(skip, limit);
+    const skip = (page - 1) * limit;
+    const cinemas = await this.CinemaRepository.findAllCinemas(skip, limit);
 
-  
-  
-  if (cinemas.length === 0) {
+    if (cinemas.length === 0) {
       throw new AppError("Nenhum cinema encontrado!", 404); // lança erro se não houver cinemas
-  }
+    }
 
-  return cinemas
-
+    return cinemas;
   }
-  
-  
-  
 }
 
 export { CinemaUseCase };

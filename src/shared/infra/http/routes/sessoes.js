@@ -10,16 +10,16 @@ sessoesRouter.post("/", (req, res) =>
   SessoesController.createSessaoController(req, res)
 );
 
-// sessoesRouter.put("/:id", (req, res) =>
-//   SessoesController.updateFilmeController(req, res)
-// );
+sessoesRouter.put("/:id", (req, res) =>
+  SessoesController.updateSessaoController(req, res)
+);
 
-// sessoesRouter.delete("/:id", (req, res) =>
-//   SessoesController.deleteFilmeController(req, res)
-// );
+sessoesRouter.delete("/:id", (req, res) =>
+  SessoesController.deleteSessaoController(req, res)
+);
 
-// sessoesRouter.get("/", (req, res) =>
-//   SessoesController.getAllFilmesController(req,res)
-// );
+sessoesRouter.get("/", (req, res) =>
+  SessoesController.getAllSessoesController(req, res)
+);
 
 export { sessoesRouter };

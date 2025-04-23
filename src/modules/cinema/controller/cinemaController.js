@@ -6,8 +6,6 @@ class CinemaController {
 
     const cinemaUserUseCase = container.resolve("CinemaUseCase");
 
-    console.log(cinemaUserUseCase);
-
     const result = await cinemaUserUseCase.createCinema(nome, cidade, estado);
 
     return response.status(201).json(result);
@@ -16,9 +14,6 @@ class CinemaController {
   async updateCinemaController(request, response) {
     const { nome, cidade, estado } = request.body;
     const { id } = request.params;
-
-    console.log("id", id);
-    console.log("resto", nome, cidade, estado);
 
     const cinemaUserUseCase = container.resolve("CinemaUseCase");
 
@@ -37,27 +32,23 @@ class CinemaController {
 
     const cinemaUserUseCase = container.resolve("CinemaUseCase");
 
-    const result = await cinemaUserUseCase.deleteCinema({id});
+    const result = await cinemaUserUseCase.deleteCinema({ id });
 
-    return response.status(204).json()
+    return response.status(204).json();
   }
 
   async getAllCinemasController(request, response) {
-    const { page , limit  } = request.query;
+    const { page, limit } = request.query;
 
-    console.log(page, limit)
-  
     const cinemaUserUseCase = container.resolve("CinemaUseCase");
-  
+
     const cinemas = await cinemaUserUseCase.getAllCinemas({
       page: parseInt(page),
       limit: parseInt(limit),
     });
-  
+
     return response.status(200).json(cinemas);
   }
-  
-  
 }
 
 export { CinemaController };

@@ -4,8 +4,6 @@ class UserController {
   async handle(request, response) {
     const { senha, email } = request.body;
 
-    console.log("chegou no controller");
-
     const authenticateUserUseCase = container.resolve(
       "authenticateUserUseCase"
     );
