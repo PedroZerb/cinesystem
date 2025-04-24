@@ -37,7 +37,7 @@ class CinemaRepository {
     return await Cinema.findAll({
       offset: skip,
       limit: limit,
-      order: [['id', 'ASC']], // ordenação opcional
+      order: [["id", "DESC"]], // ordenação opcional
     });
   }
 }
