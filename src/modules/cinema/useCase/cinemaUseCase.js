@@ -61,8 +61,6 @@ class CinemaUseCase {
   }
 
   async deleteCinema({ id }) {
-
-    console.log("deletando cinema")
     const cinema = await this.CinemaRepository.findCinemaById(id);
 
     if (!cinema) {
@@ -86,22 +84,22 @@ class CinemaUseCase {
       throw new AppError(
         "O valor de 'limit' e 'page deve ser um número inteiro positivo.",
         400
-      ); // lança erro se não houver cinemas
+      );
     }
 
     const skip = (page - 1) * limit;
     const [cinemas, total] = await Promise.all([
       this.CinemaRepository.findAllCinemas(skip, limit),
-      this.CinemaRepository.countAllCinemas()
+      this.CinemaRepository.countAllCinemas(),
     ]);
 
     if (cinemas.length === 0) {
-      throw new AppError("Nenhum cinema encontrado!", 404); // lança erro se não houver cinemas
+      throw new AppError("Nenhum cinema encontrado!", 404);
     }
 
     return {
       cinemas,
-      total
+      total,
     };
   }
 }

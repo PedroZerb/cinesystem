@@ -5,7 +5,6 @@ const FilmesController = new filmesController();
 
 const filmesRouter = Router();
 
-// Defina o caminho para a rota
 filmesRouter.post("/", (req, res) =>
   FilmesController.createFilmeController(req, res)
 );
@@ -19,7 +18,7 @@ filmesRouter.delete("/:id", (req, res) =>
 );
 
 filmesRouter.get("/", (req, res) =>
-  FilmesController.getAllFilmesController(req,res)
+  FilmesController.getAllFilmesController(req, res)
 );
 
 export { filmesRouter };

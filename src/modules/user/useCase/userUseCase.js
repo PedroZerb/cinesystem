@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 const { sign } = jwt;
-import bcrypt from "bcryptjs"; // Adicionado bcrypt
+import bcrypt from "bcryptjs";
 import { AppError } from "../../../shared/errors/appError.js";
 import { UserRepository } from "../repository/userRepository.js";
 

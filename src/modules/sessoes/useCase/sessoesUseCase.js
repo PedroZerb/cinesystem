@@ -29,7 +29,6 @@ class sessoesUseCase {
       );
     }
 
-    // Se passou por todas as verificações, pode criar a sessão
     const newSessao = await this.SessaoRepository.create({
       cinema_id,
       filme_id,
@@ -70,43 +69,40 @@ class sessoesUseCase {
       throw new AppError(
         "O valor de 'limit' e 'page deve ser um número inteiro positivo.",
         400
-      ); // lança erro se não houver cinemas
+      );
     }
 
     const skip = (page - 1) * limit;
-    const sessoes = await this.SessaoRepository.findAllSessoes(skip, limit,cinema_id );
+    const sessoes = await this.SessaoRepository.findAllSessoes(
+      skip,
+      limit,
+      cinema_id
+    );
 
-    const arraySessionsResponse = []
+    const arraySessionsResponse = [];
 
     for (const session of sessoes) {
+      const filme = await this.FilmeRepository.findFilmeById(session.filme_id);
+      const cinema = await this.CinemaRepository.findCinemaById(
+        session.cinema_id
+      );
 
-      const filme = await this.FilmeRepository.findFilmeById(session.filme_id)
-      const cinema = await this.CinemaRepository.findCinemaById(session.cinema_id)
+      const responseObject = {
+        id: session.dataValues.id,
+        cinema_id: session.dataValues.cinema_id,
+        dia_semana: session.dataValues.dia_semana,
+        filme_id: session.dataValues.filme_id,
+        horario: session.dataValues.horario,
+        nome_filme: filme.dataValues.nome,
+        nome_cinema: cinema.dataValues.nome,
+      };
 
-      console.log(session)
-
-
-        const responseObject = {
-          id: session.dataValues.id,
-          cinema_id: session.dataValues.cinema_id,
-          dia_semana: session.dataValues.dia_semana,
-          filme_id: session.dataValues.filme_id,
-          horario: session.dataValues.horario,
-          nome_filme: filme.dataValues.nome,
-          nome_cinema: cinema.dataValues.nome
-        }
-
-        arraySessionsResponse.push(responseObject)
+      arraySessionsResponse.push(responseObject);
     }
 
     if (sessoes.length === 0) {
-      throw new AppError("Nenhuma sessão encontrada!", 404); // lança erro se não houver cinemas
+      throw new AppError("Nenhuma sessão encontrada!", 404);
     }
-
-    //id
-    //nome cinema
-    //horario
-    //nome filme
 
     return arraySessionsResponse;
   }

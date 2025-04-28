@@ -1,4 +1,3 @@
-// src/repositories/UserRepository.js
 import User from "../entitie/userEntitie.js";
 
 class UserRepository {

@@ -14,7 +14,6 @@ class FilmeUseCase {
     lancamento,
     sinopse,
   }) {
-    
     const classificacoesValidas = [1, 10, 12, 14, 16, 18];
     if (!classificacoesValidas.includes(classificacao)) {
       throw new AppError(
@@ -36,8 +35,6 @@ class FilmeUseCase {
         400
       );
     }
-
-    console.log(nome,"esseeee")
     const createFilme = await this.FilmeRepository.create({
       nome,
       genero,
@@ -118,25 +115,24 @@ class FilmeUseCase {
       throw new AppError(
         "O valor de 'limit' e 'page deve ser um número inteiro positivo.",
         400
-      ); // lança erro se não houver cinemas
+      );
     }
 
     const skip = (page - 1) * limit;
-    
+
     const [filmes, total] = await Promise.all([
       this.FilmeRepository.findAllFilmes(skip, limit),
-      this.FilmeRepository.countAllFilmes()
+      this.FilmeRepository.countAllFilmes(),
     ]);
 
     if (filmes.length === 0) {
-      throw new AppError("Nenhum cinema encontrado!", 404); // lança erro se não houver cinemas
+      throw new AppError("Nenhum cinema encontrado!", 404);
     }
 
     return {
       filmes,
-      total
+      total,
     };
-
   }
 }
 

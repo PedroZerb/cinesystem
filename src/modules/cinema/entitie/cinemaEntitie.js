@@ -1,4 +1,3 @@
-// src/models/User.js
 import { DataTypes } from "sequelize";
 import sequelize from "../../../../database.js";
 
@@ -19,7 +18,7 @@ const Cinema = sequelize.define(
       allowNull: false,
     },
     estado: {
-      type: DataTypes.STRING(2), // Assumindo que 'estado' seja a sigla do estado
+      type: DataTypes.STRING(2),
       allowNull: false,
     },
   },

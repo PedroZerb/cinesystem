@@ -1,4 +1,3 @@
-// src/repositories/UserRepository.js
 import { Cinema } from "../entitie/cinemaEntitie.js";
 
 class CinemaRepository {
@@ -37,12 +36,12 @@ class CinemaRepository {
     return await Cinema.findAll({
       offset: skip,
       limit: limit,
-      order: [['id', 'DESC']], // ordenação opcional
+      order: [["id", "DESC"]],
     });
   }
 
   async countAllCinemas() {
-    return await Cinema.count(); // Conta todos os cinemas
+    return await Cinema.count();
   }
 }
 

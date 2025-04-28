@@ -5,7 +5,6 @@ const SessoesController = new sessoesController();
 
 const sessoesRouter = Router();
 
-// Defina o caminho para a rota
 sessoesRouter.post("/", (req, res) =>
   SessoesController.createSessaoController(req, res)
 );

@@ -5,7 +5,6 @@ const cinemaController = new CinemaController();
 
 const cinemaRouter = Router();
 
-// Defina o caminho para a rota
 cinemaRouter.post("/", (req, res) =>
   cinemaController.createCinemaController(req, res)
 );
@@ -19,7 +18,7 @@ cinemaRouter.delete("/:id", (req, res) =>
 );
 
 cinemaRouter.get("/", (req, res) =>
-  cinemaController.getAllCinemasController(req,res)
+  cinemaController.getAllCinemasController(req, res)
 );
 
 export { cinemaRouter };

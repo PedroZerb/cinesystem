@@ -1,4 +1,3 @@
-// src/models/User.js
 import { DataTypes } from "sequelize";
 import sequelize from "../../../../database.js";
 
@@ -31,7 +30,7 @@ const User = sequelize.define(
   },
   {
     tableName: "usuarios",
-    timestamps: false, // Mantemos false porque a tabela já tem create_at manual
+    timestamps: false,
   }
 );
 

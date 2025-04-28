@@ -2,7 +2,7 @@ export default {
   development: {
     username: "postgres",
     password: "avaliacao",
-    database: "cinema", // Altere se for outro nome
+    database: "cinema",
     host: "localhost",
     dialect: "postgres",
   },
