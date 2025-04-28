@@ -40,13 +40,14 @@ class sessoesController {
   }
 
   async getAllSessoesController(request, response) {
-    const { page, limit } = request.query;
+    const { page, limit, cinema_id } = request.query;
 
     const sessoesUseCase = container.resolve("sessoesUseCase");
 
     const Sessoes = await sessoesUseCase.getAllSessoes({
       page: parseInt(page),
       limit: parseInt(limit),
+      cinema_id: cinema_id
     });
 
     return response.status(200).json(Sessoes);

@@ -21,8 +21,12 @@ class FilmeRepository {
     return await Filme.findAll({
       offset: skip,
       limit: limit,
-      order: [['id', 'ASC']], // ordenação opcional
+      order: [['id', 'DESC']], // ordenação opcional
     });
+  }
+
+  async countAllFilmes() {
+    return await Filme.count(); // Conta todos os cinemas
   }
 }
 

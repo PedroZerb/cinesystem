@@ -44,10 +44,11 @@ class SessaoRepository {
     return { message: "Sessão deletada com sucesso", id };
   }
 
-  async findAllSessoes(skip, limit) {
+  async findAllSessoes(skip, limit,cinema_id) {
     return await Sessao.findAll({
       offset: skip,
       limit: limit,
+      where: cinema_id ? { cinema_id } : undefined,
       order: [["id", "ASC"]], // ordenação opcional
     });
   }

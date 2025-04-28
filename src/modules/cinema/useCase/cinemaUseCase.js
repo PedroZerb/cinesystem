@@ -61,6 +61,8 @@ class CinemaUseCase {
   }
 
   async deleteCinema({ id }) {
+
+    console.log("deletando cinema")
     const cinema = await this.CinemaRepository.findCinemaById(id);
 
     if (!cinema) {
@@ -88,13 +90,19 @@ class CinemaUseCase {
     }
 
     const skip = (page - 1) * limit;
-    const cinemas = await this.CinemaRepository.findAllCinemas(skip, limit);
+    const [cinemas, total] = await Promise.all([
+      this.CinemaRepository.findAllCinemas(skip, limit),
+      this.CinemaRepository.countAllCinemas()
+    ]);
 
     if (cinemas.length === 0) {
       throw new AppError("Nenhum cinema encontrado!", 404); // lança erro se não houver cinemas
     }
 
-    return cinemas;
+    return {
+      cinemas,
+      total
+    };
   }
 }
 

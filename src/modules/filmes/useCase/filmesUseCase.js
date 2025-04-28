@@ -14,7 +14,8 @@ class FilmeUseCase {
     lancamento,
     sinopse,
   }) {
-    const classificacoesValidas = ["Livre", "10", "12", "14", "16", "18"];
+    
+    const classificacoesValidas = [1, 10, 12, 14, 16, 18];
     if (!classificacoesValidas.includes(classificacao)) {
       throw new AppError(
         "Classificação inválida. Use uma das classificações permitidas: Livre, 10, 12, 14, 16, 18.",
@@ -35,6 +36,8 @@ class FilmeUseCase {
         400
       );
     }
+
+    console.log(nome,"esseeee")
     const createFilme = await this.FilmeRepository.create({
       nome,
       genero,
@@ -57,8 +60,8 @@ class FilmeUseCase {
       throw new AppError("Filme não encontrado.", 404);
     }
 
-    const classificacoesValidas = ["Livre", "10", "12", "14", "16", "18"];
-    if (classificacao && !classificacoesValidas.includes(classificacao)) {
+    const classificacoesValidas = [1, 10, 12, 14, 16, 18];
+    if (!classificacoesValidas.includes(classificacao)) {
       throw new AppError(
         "Classificação inválida. Use uma das classificações permitidas: Livre, 10, 12, 14, 16, 18.",
         400
@@ -119,13 +122,21 @@ class FilmeUseCase {
     }
 
     const skip = (page - 1) * limit;
-    const filmes = await this.FilmeRepository.findAllFilmes(skip, limit);
+    
+    const [filmes, total] = await Promise.all([
+      this.FilmeRepository.findAllFilmes(skip, limit),
+      this.FilmeRepository.countAllFilmes()
+    ]);
 
     if (filmes.length === 0) {
       throw new AppError("Nenhum cinema encontrado!", 404); // lança erro se não houver cinemas
     }
 
-    return filmes;
+    return {
+      filmes,
+      total
+    };
+
   }
 }
 
