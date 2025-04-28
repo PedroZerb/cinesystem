@@ -79,7 +79,9 @@ class sessoesUseCase {
       cinema_id
     );
 
-    const arraySessionsResponse = [];
+    const countSessions = await this.SessaoRepository.countAllSessions();
+
+    const Sessions = [];
 
     for (const session of sessoes) {
       const filme = await this.FilmeRepository.findFilmeById(session.filme_id);
@@ -97,14 +99,14 @@ class sessoesUseCase {
         nome_cinema: cinema.dataValues.nome,
       };
 
-      arraySessionsResponse.push(responseObject);
+      Sessions.push(responseObject);
     }
 
     if (sessoes.length === 0) {
       throw new AppError("Nenhuma sessão encontrada!", 404);
     }
 
-    return arraySessionsResponse;
+    return { Sessions, countSessions };
   }
 }
 

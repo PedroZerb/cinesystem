@@ -49,8 +49,12 @@ class SessaoRepository {
       offset: skip,
       limit: limit,
       where: cinema_id ? { cinema_id } : undefined,
-      order: [["id", "ASC"]],
+      order: [["id", "DESC"]],
     });
+  }
+
+  async countAllSessions() {
+    return await Sessao.count();
   }
 }
 
